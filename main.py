@@ -10,6 +10,7 @@ from github import Github
 ## Adding command-line arguments
 parser = argparse.ArgumentParser()
 parser.add_argument('--openai_api_key', help='Your OpenAI API Key')
+parser.add_argument('--prompt', default="Explain Code", help='Prompt to OpenAI')
 parser.add_argument('--github_token', help='Your Github Token')
 parser.add_argument('--github_pr_id', help='Your Github PR ID')
 parser.add_argument('--openai_engine', default="text-davinci-002", help='GPT-3 model to use. Options: text-davinci-002, text-babbage-001, text-curie-001, text-ada-001')
@@ -42,7 +43,7 @@ def files():
             # Sending the code to ChatGPT
             response = openai.Completion.create(
                 engine=args.openai_engine,
-                prompt=(f"Explain Code:\n```{content}```"),
+                prompt=(f"{args.prompt}:\n```{content}```"),
                 temperature=float(args.openai_temperature),
                 max_tokens=int(args.openai_max_tokens)
             )
@@ -74,7 +75,7 @@ def patch():
 
             response = openai.Completion.create(
                 engine=args.openai_engine,
-                prompt=(f"Summarize what was done in this diff:\n```{diff_text}```"),
+                prompt=(f"{args.prompt}:\n```{diff_text}```"),
                 temperature=float(args.openai_temperature),
                 max_tokens=int(args.openai_max_tokens)
             )
