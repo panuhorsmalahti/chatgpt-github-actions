@@ -30,6 +30,10 @@ inputs:
     description: 'How to capture PR changes. Options: files, patch'
     required: false
     default: 'files'
+  prompt:  # id of input
+    description: 'Specify prompt to OpenAI'
+    required: false
+    default: 'Explain Code'
 runs:
   using: 'docker'
   image: 'Dockerfile'
@@ -41,3 +45,4 @@ runs:
     - ${{ inputs.openai_temperature }}
     - ${{ inputs.openai_max_tokens }}
     - ${{ inputs.mode }}
+    - ${{ inputs.prompt }}
